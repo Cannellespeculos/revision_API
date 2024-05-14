@@ -1,6 +1,8 @@
 const results = document.getElementById("results")
 const regions = document.getElementById("regions")
 const cards = document.getElementsByClassName("country-card")
+const input = document.getElementById("input")
+const littleCards = document.getElementsByClassName("country-details")
 
 
 fetch("https://restcountries.com/v3.1/all?fields=name,capital,region,flags,population")
@@ -36,6 +38,7 @@ fetch("https://restcountries.com/v3.1/all?fields=name,capital,region,flags,popul
         div.setAttribute("id", element.region)
         img.className = "country-flag"
         underdiv.className = "country-details"
+        underdiv.setAttribute("id", element.name.official)
 
         // append element
         div.append(img)
@@ -57,12 +60,34 @@ fetch("https://restcountries.com/v3.1/all?fields=name,capital,region,flags,popul
             const card = cards[i]
             let element = cards[i].id;
             element = element.toLowerCase()
+            card.className = "country-card"
 
-            if (element !== e) {
+            if (element !== e && e !== "") {
                 card.className += " erase"
             }
             
         }
+    })
+
+
+    input.addEventListener("input", (ev) => {
+        console.log(ev.target.value)
+        let e = ev.target.value 
+
+        for (let i = 0; i < littleCards.length; i++) {
+            const card = littleCards[i]
+            let element = littleCards[i].id;
+            let clas = cards[i].className
+            element = element.toLowerCase()
+            cards[i].className = "country-card"
+
+
+            if (!element.includes(e)) {
+                cards[i].className += " erase"
+            }
+            
+        }
+
     })
     
 })
